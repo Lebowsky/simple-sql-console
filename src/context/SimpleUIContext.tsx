@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { IContextProviderData } from "../models/contextProvider";
 import { ISideMenuItem } from "../models/sideMenu";
 import { ContentManager } from "../services/contentManager";
+import { ConfigManager } from "../services/configManager";
 
 const SimpleUIContext = createContext<IContextProviderData | null>(null)
 
@@ -13,11 +14,13 @@ export function SimpleUIContextProvider({ children }: ContextProps) {
   const [sideMenu, setSideMenu] = useState<ISideMenuItem[]>([])
 
   const contentManager = new ContentManager()
+  const configManager = new ConfigManager()
 
   useEffect(() => {
-    // contentManager.getContent(contentTypes.common)
+    // const content = contentManager.getConfigData()
+    // console.log(content)
     updateSideMenu()
-  },)
+  }, [])
 
   function updateSideMenu() {
     setSideMenu(contentManager.getSideMenu())

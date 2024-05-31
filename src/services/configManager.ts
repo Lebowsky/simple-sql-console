@@ -1,3 +1,4 @@
+import { newConfigurationData } from "../data/newConfigurationData";
 import { JsonItem, IProcess } from "../models/configData";
 import { IContentItem, contentTypes } from "../models/content";
 import { ISideMenuItem } from "../models/sideMenu";
@@ -12,7 +13,10 @@ export class ConfigManager {
   private elements: IContentItem[] = []
   // private mainMenu: IListItem[] = []
 
-  constructor(raw_data: {[key: string]: any}) {
+  constructor(raw_data?: {[key: string]: any}) {
+    if (!raw_data){
+      raw_data = newConfigurationData
+    }
     this.raw_data = raw_data
     this.id = 0
     const {
@@ -26,9 +30,9 @@ export class ConfigManager {
       StyleTemplates,
       ...root
     } = this.raw_data
-
-    this.parseProcesses(Processes)
+    this.__parseProcesses(Processes)
     this.root = root
+    this.saveDataToStorage()
   }
   public saveDataToStorage(){
     localStorage.setItem('currentConfigData', JSON.stringify({
@@ -38,8 +42,7 @@ export class ConfigManager {
       elements: this.elements,
     }))
   }
-  
-  private parseProcesses(Processes: JsonItem[]): void {
+  private __parseProcesses(Processes: JsonItem[]): void {
     Processes && Processes.forEach(({ Operations, CVFrames, ...item }) => {
       const id = this.getId()
       
@@ -49,11 +52,11 @@ export class ConfigManager {
         contentType: contentTypes.processes,
         content: item
       })
-      Operations && this.parseOperations(Operations, id)
-      CVFrames && this.parseCVFrames(CVFrames, id)
+      Operations && this.__parseOperations(Operations, id)
+      CVFrames && this.__parseCVFrames(CVFrames, id)
     });
   }
-  private parseOperations(Operations: JsonItem[], parentId: number): void {
+  private __parseOperations(Operations: JsonItem[], parentId: number): void {
     Operations.forEach(({ Elements, Handlers, ...item }) => {
       const id = this.getId()
       this.operations.push({
@@ -62,11 +65,11 @@ export class ConfigManager {
         contentType: contentTypes.operations,
         content: item
       })
-      Elements && this.parseElements(Elements, id)
-      Handlers && this.parseHandlers(Handlers, id)
+      Elements && this.__parseElements(Elements, id)
+      Handlers && this.__parseHandlers(Handlers, id)
     })
   }
-  private parseCVFrames(frames: JsonItem[], parentId: number): void {
+  private __parseCVFrames(frames: JsonItem[], parentId: number): void {
     frames.forEach(({ Handlers, ...item }) => {
       const id = this.getId()
       this.operations.push({
@@ -75,10 +78,10 @@ export class ConfigManager {
         contentType: contentTypes.operations,
         content: item
       })
-      Handlers && this.parseHandlers(Handlers, id)
+      Handlers && this.__parseHandlers(Handlers, id)
     })
   }
-  private parseElements (elms: JsonItem[], parentId: number){
+  private __parseElements (elms: JsonItem[], parentId: number){
     elms.forEach(({ Elements, ...item }) => {
       const id = this.getId()
       this.elements.push({ 
@@ -87,10 +90,10 @@ export class ConfigManager {
         contentType: contentTypes.elements, 
         content: item 
       })
-      Elements && this.parseElements(Elements, id)
+      Elements && this.__parseElements(Elements, id)
     })
   }
-  private parseHandlers (hls: JsonItem[], parentId: number): void {
+  private __parseHandlers (hls: JsonItem[], parentId: number): void {
     hls.forEach(({...item}) => {
       const id = this.getId()
       this.handlers.push({ 

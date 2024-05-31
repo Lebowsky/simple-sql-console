@@ -1,0 +1,101 @@
+.side-menu {
+    height: 100%;
+    width: 250px;
+    background: #a9a9a9;
+    padding: 20px;
+    overflow: auto;
+}
+.side-menu a {
+    font-size: 14px;
+    display: flex;
+    color: #fff;
+    margin-bottom: 12px;
+    align-items: center;
+    position: relative;
+    margin-left: 15px;
+    user-select   : none;
+}
+ul.side-menu-nested li {
+    padding-left: 1rem;
+}
+.icon:before {
+    content: "\f114";
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    position: absolute;
+    right: 100%;
+    margin-right: 5px;
+    color: #bb074b;
+    width: 15px;
+    font-size: 10pt;
+}
+.icon.common:before {
+    content: "\f015";
+}
+.icon.main-menu:before {
+    content: "\f0c9";
+}
+.icon.styles:before {
+    content: "\f1fc";
+}
+.icon.start-screen:before {
+    content: "\f005";
+}
+.icon.folder:before {
+    content: "\f07b";
+}
+.icon.folder.open:before {
+    content: "\f07c";
+}
+.icon.mediafiles:before {
+    content: "\f1c5";
+}
+.icon.pythonfiles:before {
+    content: "\f1c9";
+}
+.icon.common-handlers:before {
+    content: "\f022";
+}
+.icon.shedulers:before {
+    content: "\f017";
+}
+.icon.process:before {
+    content: "\f1b2";
+}
+.icon.processes:before {
+    content: "\f1b3";
+}
+.icon.operation:before {
+    content: "\f108";
+}
+
+.icon.cvo:before {
+    content: 'cv';
+    font-size: 9px;
+    vertical-align: middle;
+    font-weight: 600;
+    display: inline-block;
+    background: #333;
+    border-radius: 4px;
+    color: #a9a9a9;
+    padding: 1px 2px;
+    padding-right: 1px;
+    text-transform: uppercase;
+}
+
+.icon.frame:before {
+    content: 'fr';
+    font-size: 9px;
+    vertical-align: middle;
+    font-weight: 600;
+    display: inline-block;
+    background: #333;
+    border-radius: 4px;
+    color: #a9a9a9;
+    padding: 1px 2px;
+    padding-right: 0px;
+    text-transform: uppercase;
+}

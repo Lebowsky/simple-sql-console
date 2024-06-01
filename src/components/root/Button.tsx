@@ -1,10 +1,9 @@
 interface ButtonProps {
   children: React.ReactNode
   onClick?(): void
-  btnType?: string
 }
 
-export default function Button({ children, onClick, btnType }: ButtonProps) {
+export default function Button({ children, onClick }: ButtonProps) {
   const style = {
     background: "linear-gradient(-45deg, #21B9E1, #E71F53, #FBAF2E)",
     border: "none",

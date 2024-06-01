@@ -28,7 +28,6 @@ export default function TextView({
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      // width: '100%',
       padding: 10
     }}>
       <label style={{

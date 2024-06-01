@@ -1,32 +1,14 @@
-interface ButtonProps {
-  children: React.ReactNode
-  onClick?(): void
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
+
+interface ButtonSendProps{
+  onClick(): void
 }
-
-export default function Button({ children, onClick }: ButtonProps) {
-  const style = {
-    background: "linear-gradient(-45deg, #21B9E1, #E71F53, #FBAF2E)",
-    border: "none",
-    padding: '10px 20px',
-    borderRadius: '300px',
-    cursor: 'pointer',
-    fontWeight: 500,
-    margin: '1px 5px',
-    color: '#fff',
-  }
-
+export default function ButtonSend({onClick}: ButtonSendProps) {
   return (
-    <button style={style} onClick={onClick} type="submit">
-      {children}
-    </button>
-  )
-}
-
-interface ButtonGroupProps {
-  children: React.ReactNode
-}
-export function ButtonGroup({ children }: ButtonGroupProps) {
-  return (
-    <div style={{ marginBottom: '10px' }}>{children}</div>
-  )
+    <Button variant="contained" endIcon={<SendIcon />} onClick={onClick}>
+      Send
+    </Button>
+  );
 }

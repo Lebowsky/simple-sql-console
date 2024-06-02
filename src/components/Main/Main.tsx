@@ -6,16 +6,16 @@ import SqlQueryParams from "../root/TextField";
 
 
 export default function Main() {
-  const [sqlText, setSqlText] = useState('')
-  const [host, setHost] = useState('0.0.0.0')
+  const [sqlText, setSqlText] = useState('select count (*) from RS_docs')
+  const [host, setHost] = useState('192.168.1.124')
   const [baseName, setBaseName] = useState('SimpleKeep')
 
   function handleSqlText(text: string){
     setSqlText(text)
   }
 
-  function handleSend(){
-    window.electronAPI.sendQuery(
+  async function handleSend(){
+    await window.electronAPI.sendQuery(
       {
         host: host, 
         baseName: baseName, 

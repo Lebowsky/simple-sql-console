@@ -61,6 +61,7 @@ export class SQLQueryManager {
       })
 
       response.on('end', () => {
+        // this.__callback(this.__parseData(responseData))
         this.__callback(responseData)
       })
 

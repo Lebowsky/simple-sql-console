@@ -1,12 +1,12 @@
 import { useState } from "react";
-import StickyHeadTable from "../Table/SQLTable";
+import SqlTable from "../Table/SqlTable";
 import ButtonSend from "../root/Button";
 import SqlQueryText from "../root/SqlQueryText";
 import SqlQueryParams from "../root/TextField";
 
 
 export default function Main() {
-  const [sqlText, setSqlText] = useState('select count (*) from RS_docs')
+  const [sqlText, setSqlText] = useState('select  * from RS_docs LIMIT 1')
   const [host, setHost] = useState('192.168.1.124')
   const [baseName, setBaseName] = useState('SimpleKeep')
 
@@ -35,7 +35,7 @@ export default function Main() {
         ></SqlQueryParams>
       </div>
       <SqlQueryText defaultValue={sqlText} onChange={(e) => handleSqlText(e)}></SqlQueryText>
-      <StickyHeadTable></StickyHeadTable>
+      <SqlTable></SqlTable>
     </div>
   )
 }

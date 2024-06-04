@@ -57,7 +57,7 @@ export default function SqlTable() {
                         <TableCell key={column.id} align={column.align} >
                           {column.format && typeof value === 'number'
                             ? column.format(value)
-                            : value}
+                            : value }
                         </TableCell>
                       );
                     })}

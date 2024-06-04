@@ -64,24 +64,23 @@ export class SQLQueryManager {
   }
 
   public parseData(responseData: string): ISqlTableData {
-    const [header, ...body] = responseData.split('\n').map(el => el.split('\n'))
-      if (header && header.length) {
-        const columns: IColumn[] = header[0].split('|').map((el, idx) => (
-          {
-            id: idx.toString(),
-            label: el.trim(),
-          }
-        ))
-        const data = body
-          .map((el) => el[0].trim().toString().split('|'))
-          .filter((el) => el[0].length)
-          .map(el => Object.fromEntries(el.map((el, idx) => ([idx.toString(), el]))))
-
-        return {
-          columns: columns,
-          data: data
+    const [header, ...body] = responseData.split('\r\n')
+    
+    if (header && header.length) {
+      const columns: IColumn[] = header.split('|').map((el, idx) => (
+        {
+          id: idx.toString(),
+          label: el.trim(),
         }
+      ))
+      const data = body
+        .map((el) => el.trim().split('|'))
+        .map(el => Object.fromEntries(el.map((el, idx) => ([idx.toString(), el]))))
+      return {
+        columns: columns,
+        data: data
       }
-      
+    }
+
   }
 }

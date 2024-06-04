@@ -26,6 +26,7 @@ export default function SqlQueryParams({host, setHost, baseName, setBaseName}: S
           defaultValue={host}
           size="small"
           onChange={e => setHost(e.target.value)}
+          placeholder='0.0.0.0'
         />
         <TextField
           label="Base name"

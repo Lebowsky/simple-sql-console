@@ -1,13 +1,8 @@
-import http from 'http'
 import querystring from 'querystring'
 import { net } from 'electron'
+import { IColumn, ISqlTableData } from '../models/sqlConsoleModels'
 
 
-interface ISqlQuerySendResult {
-  error: string
-  content: string
-  data: { header: string, data: string[] } | null
-}
 export class SQLQueryManager {
   private __deviceHost: string
   private __devicePort: number
@@ -54,34 +49,39 @@ export class SQLQueryManager {
       path: '?' + querystring.stringify(queryArgs)
     })
     request.on('response', (response) => {
-      console.log(`STATUS: ${response.statusCode}`)
-      
       response.on('data', (chunk) => {
         responseData += chunk
       })
-
       response.on('end', () => {
-        // this.__callback(this.__parseData(responseData))
         this.__callback(responseData)
       })
-
       response.on('error', (error: any) => {
-        // console.log(`ERROR: ${JSON.stringify(error)}`
         console.log(error)
       })
     })
-
-    request.on('error', (error) => {console.log(error)})
+    request.on('error', (error) => { console.log(error) })
     request.end()
   }
 
-  private __parseData(data: string) {
-  const tableData = data.split('\n')
-  if (tableData.length > 1) {
-    return {
-      header: tableData[0],
-      data: tableData.slice(1)
-    }
+  public parseData(responseData: string): ISqlTableData {
+    const [header, ...body] = responseData.split('\n').map(el => el.split('\n'))
+      if (header && header.length) {
+        const columns: IColumn[] = header[0].split('|').map((el, idx) => (
+          {
+            id: idx.toString(),
+            label: el.trim(),
+          }
+        ))
+        const data = body
+          .map((el) => el[0].trim().toString().split('|'))
+          .filter((el) => el[0].length)
+          .map(el => Object.fromEntries(el.map((el, idx) => ([idx.toString(), el]))))
+
+        return {
+          columns: columns,
+          data: data
+        }
+      }
+      
   }
-}
 }
